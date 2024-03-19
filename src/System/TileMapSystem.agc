@@ -106,8 +106,14 @@ FUNCTION TMS_LoadMap(mapDescriptor AS STRING, tileSet AS STRING, tileSize AS INT
 			
 			// To finish, since tileSet is a series of images, set the corresponding tile
 			SetSpriteFrame(map.Data[x, y].SpriteId, map.Data[x, y].Id)
+			
+			// Set tile offscrean so TileMap renderer doesn't have problems
+			SetSpritePosition(map.Data[x, y].SpriteId, -500, -500)
 		NEXT y
     NEXT x
+    
+    CloseFile(fileDescriptor)
+    SetSpriteVisible(sprTileSet, 0)
 ENDFUNCTION map
 
 
@@ -124,24 +130,44 @@ ENDFUNCTION map
  * Description: Function used to render a map already loaded in memory
  */
 FUNCTION TMS_DrawMap(map REF AS TMS_Map)
+	ClearScreen()
+	
+	// Step 1: Based on camera resolution and position, calculate just the exact
+	//         columns and rows that appear on screen to not waste time moving everything
+	//         else
+	xTile AS INTEGER
+	xTileEnd AS INTEGER
+	yTile AS INTEGER
+	yTileEnd AS INTEGER
+	
+	xResidual AS INTEGER
+	yResidual AS INTEGER
+	
+	xTile = Floor(map.Camera.XCameraPos / (map.TileSize * 1.0))
+	xTileEnd = Floor((map.Camera.XCameraPos + map.Camera.Width) / (map.TileSize * 1.0))
+	xResidual = Mod(map.Camera.XCameraPos, map.TileSize)
+	
+	yTile = Floor(map.Camera.YCameraPos / (map.TileSize * 1.0))
+	yTileEnd = Floor((map.Camera.YCameraPos + map.Camera.Height) / (map.TileSize * 1.0))
+	yResidual = Mod(map.Camera.YCameraPos, map.TileSize)
+	
+	IF (xTileEnd >= map.Width)
+		xTileEnd = map.Width - 1
+    ENDIF
+    
+    IF (yTileEnd >= map.Height)
+		yTileEnd = map.Height - 1
+	ENDIF
 	
 	// Please dop not confuse, we're using x,y using the matrix conventions
 	// but for the plane, x = y, y = x
-	FOR x = 0 TO map.Height - 1
-		FOR y = 0 TO map.Width - 1
-			
-			// Calculate if, based on the camera, what would be the offset of the tile
-			xWorldCoordinate AS FLOAT
-			yWorldCoordinate AS FLOAT
+	FOR x = yTile TO yTileEnd
+		FOR y = xTile TO xTileEnd
 			xScreenCoordinate AS FLOAT
 			yScreenCoordinate AS FLOAT
 			
-			xWorldCoordinate = y*map.TileSize
-			yWorldCoordinate = x*map.TileSize
-			
-			xScreenCoordinate = xWorldCoordinate - map.Camera.XCameraPos
-			yScreenCoordinate = yWorldCoordinate - map.Camera.YCameraPos
-			
+			xScreenCoordinate = (y - xTile)*map.TileSize - Mod(map.Camera.XCameraPos, map.TileSize)
+			yScreenCoordinate = (x - yTile)*map.TileSize - Mod(map.Camera.YCameraPos, map.TileSize)
 			
 			SetSpritePosition(map.Data[x, y].SpriteId, xScreenCoordinate, yScreenCoordinate)
 		NEXT y
