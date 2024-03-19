@@ -166,12 +166,25 @@ FUNCTION TMS_DrawMap(map REF AS TMS_Map)
 			xScreenCoordinate AS FLOAT
 			yScreenCoordinate AS FLOAT
 			
-			xScreenCoordinate = (y - xTile)*map.TileSize - Mod(map.Camera.XCameraPos, map.TileSize)
-			yScreenCoordinate = (x - yTile)*map.TileSize - Mod(map.Camera.YCameraPos, map.TileSize)
+			xScreenCoordinate = (y - xTile)*map.TileSize - xResidual
+			yScreenCoordinate = (x - yTile)*map.TileSize - yResidual
 			
 			SetSpritePosition(map.Data[x, y].SpriteId, xScreenCoordinate, yScreenCoordinate)
 		NEXT y
 	NEXT x
+	
+	// Borders put them outside of the screen
+	IF (xTileEnd + 1 <= map.Width - 1)
+		FOR x = yTile TO yTileEnd
+			SetSpritePosition(map.Data[x, xTileEnd + 1].SpriteId, -500, -500)
+		NEXT x
+	ENDIF
+	
+	IF (yTileEnd + 1 <= map.Height -1)
+		FOR y = xTile TO xTileEnd
+			SetSpritePosition(map.Data[yTileEnd + 1, y].SpriteId, -500, -500)
+		NEXT y
+	ENDIF
 ENDFUNCTION
 
 /*
