@@ -31,5 +31,5 @@ FUNCTION SRS_DrawObjectToScreen(spaceObject REF AS CS_SpaceObject, map REF AS TM
     yScreen = spaceObject.YPos - map.Camera.YCameraPos
     
     SetSpritePosition(spriteId, xScreen, yScreen)
-    SetSpriteDepth(spriteId, FOREGROUND_LEVEL_DRAW)
+    SetSpriteDepth(spriteId, FOREGROUND_LEVEL_DRAW) // Make sure objects are drawn on top of the screen
 ENDFUNCTION
