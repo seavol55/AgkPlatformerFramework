@@ -9,3 +9,7 @@
 
 #constant BACKGROUND_LEVEL_DRAW 10
 #constant FOREGROUND_LEVEL_DRAW 0
+
+#constant COLLISION_MARGIN 2
+
+#constant BOX_SPRITE_SHAPE 2

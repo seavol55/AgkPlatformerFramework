@@ -38,18 +38,15 @@ ENDTYPE
 
 
 player AS Player
-player.SpriteId = CreateSprite(LoadImage("boy.png"))
-SetSpriteAnimation(player.SpriteId, 32, 32, 4)
-SetSpriteFrame(player.SpriteId, 1)
-SetSpriteVisible(player.SpriteId, 1)
-SetSpriteDepth(player.SpriteId, 0)
+player.SpaceObject.SpriteId = CreateSprite(LoadImage("boy.png"))
+SetSpriteAnimation(player.SpaceObject.SpriteId, 32, 32, 4)
+SetSpriteFrame(player.SpaceObject.SpriteId, 1)
+SetSpriteVisible(player.SpaceObject.SpriteId, 1)
+SetSpriteDepth(player.SpaceObject.SpriteId, 0)
+SetSpriteShape(player.SpaceObject.SpriteId, BOX_SPRITE_SHAPE)
 
 player.SpaceObject.XPos = 0
 player.SpaceObject.YPos = 0
-player.SpaceObject.BoxCollider.XOffset = 0
-player.SpaceObject.BoxCollider.YOffset = 0
-player.SpaceObject.BoxCollider.Height = 32
-player.SpaceObject.BoxCollider.Width = 32
 
 
 
@@ -63,31 +60,30 @@ TMS_SetMapCameraPos(map, 0, 0)
 MVS_SetObjectToCenterScreen(player.SpaceObject, map)
 
 do
+	movementResult AS MVS_MovementResult
+	movementResult.xAmount = 0
+	movementResult.yAmount = 0
+	
     IF GetRawKeyState(37) // left
-        TMS_AddCameraMovement(map, -5, 0)
-        MVS_AddObjectMovement(player.SpaceObject, map, -5, 0)
+		movementResult.xAmount = -5
+    ELSEIF GetRawKeyState(39) // right
+		movementResult.xAmount = 5
+	ELSEIF GetRawKeyState(38) // up
+		movementResult.yAmount = -5
+    ELSEIF GetRawKeyState(40) // down
+		movementResult.yAmount = 5
     ENDIF
     
-    IF GetRawKeyState(39) // right
-        TMS_AddCameraMovement(map, 5, 0)
-        MVS_AddObjectMovement(player.SpaceObject, map, 5, 0)
-    ENDIF
-    
-    IF GetRawKeyState(38) // up
-        TMS_AddCameraMovement(map, 0, -5)
-        MVS_AddObjectMovement(player.SpaceObject, map, 0, -5)
-    ENDIF
-    
-    IF GetRawKeyState(40) // down
-        TMS_AddCameraMovement(map, 0, 5)
-        MVS_AddObjectMovement(player.SpaceObject, map, 0, 5)
-    ENDIF
+    // Check if movement is valid
+    MVS_GetValidMovementInWorld(player.SpaceObject, map, movementResult)
+    TMS_AddCameraMovement(map, movementResult.xAmount, movementResult.yAmount)
+    MVS_AddObjectMovement(player.SpaceObject, map, movementResult.xAmount, movementResult.yAmount)
     
     
     // Draw tilemap
     TMS_DrawMap(map)
     
     // Draw player object
-    SRS_DrawObjectToScreen(player.SpaceObject, map, player.SpriteId)
+    SRS_DrawObjectToScreen(player.SpaceObject, map)
     Sync()
 loop

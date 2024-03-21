@@ -8,6 +8,7 @@
 
 #include "src/System/SystemConventions.agc"
 
+
 /*
  * Type Name: TMS_Tile
  *
@@ -18,6 +19,7 @@
  */
 TYPE TMS_Tile
     Id       AS INTEGER
+    Walkable AS INTEGER
 ENDTYPE
 
 
@@ -118,6 +120,11 @@ FUNCTION TMS_LoadMap(mapDescriptor AS STRING, tileSet AS STRING, tileSize AS INT
         FOR y = 0 TO map.Width -1
             // Set the original Id for the tile from file
             map.Data[x, y].Id = Val(GetStringToken2(strLine, ",", y + 1))
+            map.Data[x, y].Walkable = 1
+            
+            IF (map.Data[x, y].Id = 5)
+				map.Data[x, y].Walkable = 0
+			ENDIF
         NEXT y
     NEXT x
     
@@ -250,6 +257,7 @@ FUNCTION TMS_SetCameraDimensions(map REF AS TMS_Map, width AS INTEGER, height AS
             // Set tile offscrean so TileMap renderer doesn't have problems
             SetSpritePosition(map.SpriteData[x, y], -500, -500)
             SetSpriteVisible(map.SpriteData[x, y], 1)
+            SetSpriteShape(map.SpriteData[x, y], BOX_SPRITE_SHAPE)
         NEXT y
     NEXT x
 ENDFUNCTION
