@@ -6,3 +6,6 @@
  */
 #constant TRUE  1
 #constant FALSE 0
+
+#constant BACKGROUND_LEVEL_DRAW 10
+#constant FOREGROUND_LEVEL_DRAW 0

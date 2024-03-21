@@ -52,12 +52,16 @@ FILE_0=main.agc;-1
 FILE_1=src%2FSystem%2FCollisionSystem.agc;-1
 FILE_2=src%2FSystem%2FSystemConventions.agc;-1
 FILE_3=src%2FSystem%2FTileMapSystem.agc;-1
+FILE_4=src%2FSystem%2FMovementSystem.agc;-1
+FILE_5=src%2FSystem%2FSpriteRendererSystem.agc;-1
 
 [files]
-FILE_NAME_0=0;main.agc;1175;2
-FILE_NAME_1=0;src%2FSystem%2FCollisionSystem.agc;4732;3
-FILE_NAME_2=0;src%2FSystem%2FSystemConventions.agc;206;0
-FILE_NAME_3=1;src%2FSystem%2FTileMapSystem.agc;201;1
+FILE_NAME_0=0;main.agc;2586;0
+FILE_NAME_1=0;src%2FSystem%2FCollisionSystem.agc;2217;3
+FILE_NAME_2=0;src%2FSystem%2FSystemConventions.agc;238;1
+FILE_NAME_3=0;src%2FSystem%2FTileMapSystem.agc;11028;2
+FILE_NAME_4=0;src%2FSystem%2FMovementSystem.agc;2112;4
+FILE_NAME_5=1;src%2FSystem%2FSpriteRendererSystem.agc;535;5
 
 [project]
 description=

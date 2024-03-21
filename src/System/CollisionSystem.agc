@@ -36,8 +36,8 @@ ENDTYPE
  *              with the box, is a collision
  */
 TYPE CS_BoxCollider
-    XOffset AS INTEGER
-    YOffset AS INTEGER
+    XOffset AS FLOAT
+    YOffset AS FLOAT
     Width   AS INTEGER
     Height  AS INTEGER
 ENDTYPE
@@ -56,10 +56,8 @@ ENDTYPE
  *                   the space object
  */
 TYPE CS_SpaceObject
-    XPos        AS INTEGER
-    YPOS        AS INTEGER
-    Width       AS INTEGER
-    Height      AS INTEGER
+    XPos        AS FLOAT
+    YPos        AS FLOAT
     BoxCollider AS CS_BoxCollider
 ENDTYPE
 

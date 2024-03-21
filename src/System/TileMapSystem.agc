@@ -6,6 +6,8 @@
  *
  */
 
+#include "src/System/SystemConventions.agc"
+
 /*
  * Type Name: TMS_Tile
  *
@@ -95,6 +97,7 @@ FUNCTION TMS_LoadMap(mapDescriptor AS STRING, tileSet AS STRING, tileSize AS INT
     sprTileSet = CreateSprite(LoadImage(tileSet))
     tileCount = (GetSpriteWidth(sprTileSet) / map.TileSize) * (GetSpriteHeight(sprTileSet) / map.TileSize)
     SetSpriteAnimation(sprTileSet, map.TileSize, map.TileSize, tileCount)
+    SetSpriteDepth(sprTileSet, BACKGROUND_LEVEL_DRAW) // Map tiles should be at the bottom of the screen concerning draw order
     
     map.TileSetId = sprTileSet
     
