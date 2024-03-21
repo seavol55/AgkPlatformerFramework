@@ -61,7 +61,7 @@ FILE_NAME_1=0;src%2FSystem%2FCollisionSystem.agc;2217;3
 FILE_NAME_2=0;src%2FSystem%2FSystemConventions.agc;238;1
 FILE_NAME_3=0;src%2FSystem%2FTileMapSystem.agc;11028;2
 FILE_NAME_4=0;src%2FSystem%2FMovementSystem.agc;2112;4
-FILE_NAME_5=1;src%2FSystem%2FSpriteRendererSystem.agc;535;5
+FILE_NAME_5=1;src%2FSystem%2FSpriteRendererSystem.agc;1291;5
 
 [project]
 description=
